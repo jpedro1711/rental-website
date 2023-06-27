@@ -29,8 +29,11 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "src/components/Nav.jsx",
-    "src/app/login/FormLogin.jsx",
-    "src/components/SectionHome.jsx"
+    "src/app/login/FormLogin.tsx",
+    "src/components/SectionHome.jsx",
+    "src/app/frota/FrotaSection.tsx",
+    "src/app/frota/[carId]/reserva/FormReserva.tsx",
+    "src/app/cadastro/FormCadastro.tsx"
   ],
   "exclude": ["node_modules"]
 }

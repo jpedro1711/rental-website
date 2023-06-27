@@ -2,8 +2,13 @@
 
 import React from 'react';
 import { useState } from 'react';
+import { FormEvent } from 'react';
 
-const FormReserva = (parameter) => {
+interface Parameter {
+  parameter: number;
+}
+
+const FormReserva = (parameter: Parameter) => {
   const cars = [
     {
       carId: 1,
@@ -42,7 +47,7 @@ const FormReserva = (parameter) => {
       pricePerDay: 400.0,
     },
   ];
-  // Encontre o veículo com base no carId
+
   const selectedCar = cars.find((car) => car.carId === parameter.parameter);
 
   if (!selectedCar) {
@@ -58,10 +63,15 @@ const FormReserva = (parameter) => {
   const [numeroCarteira, setNumeroCarteira] = useState('');
   const [observacoes, setObservacoes] = useState('');
   const [showModal, setShowModal] = useState(false);
-  const [total, setTotal] = useState();
+  const [total, setTotal] = useState(0);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (new Date(dataRetirada) > new Date(dataDevolucao)) {
+      alert('A data de devolução não pode ser anterior à data de retirada.');
+      return;
+    }
 
     // Realizar ações com os dados do formulário, como enviar para um servidor, etc.
     // Por enquanto, apenas exibindo os valores no console:
@@ -71,9 +81,11 @@ const FormReserva = (parameter) => {
     console.log('Número da Carteira de Motorista:', numeroCarteira);
     console.log('Observações:', observacoes);
 
-    const startDate = new Date(dataRetirada);
-    const endDate = new Date(dataDevolucao);
-    const totalDays = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24));
+    const startDate: Date = new Date(dataRetirada);
+    const endDate: Date = new Date(dataDevolucao);
+    const totalDays: number = Math.ceil(
+      (endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24)
+    );
     const totalPrice = totalDays * pricePerDay;
     setTotal(totalPrice);
 

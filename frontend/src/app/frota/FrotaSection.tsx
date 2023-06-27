@@ -1,7 +1,20 @@
 'use client';
 
 import Link from 'next/link';
+import { ChangeEvent, FormEvent } from 'react';
 import React, { useEffect, useState } from 'react';
+
+interface Car {
+  carId: number;
+  make: string;
+  model: string;
+  year: number;
+  imageUrl: string;
+  mileage: number;
+  licensePlate: string;
+  categoryId: number;
+  pricePerDay: number;
+}
 
 const FrotaSection = () => {
   const categories = [
@@ -62,12 +75,12 @@ const FrotaSection = () => {
     },
   ];
 
-  const [selectedCategory, setSelectedCategory] = useState('');
-  const [carsState, setCarsState] = useState();
+  const [selectedCategory, setSelectedCategory] = useState<number | ''>('');
+  const [carsState, setCarsState] = useState<Car[]>();
   const [noResults, setNoResults] = useState(false);
 
-  const handleCategoryChange = (event) => {
-    setSelectedCategory(event.target.value);
+  const handleCategoryChange = (event: ChangeEvent<HTMLSelectElement>) => {
+    setSelectedCategory(event.target.value as number | '');
   };
 
   useEffect(() => {

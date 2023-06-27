@@ -2,12 +2,13 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import { FormEvent } from 'react';
 
 const FormLogin = () => {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     // Validações
