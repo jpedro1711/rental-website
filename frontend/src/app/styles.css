@@ -1,0 +1,11 @@
+.background-image {
+  background-image: url('https://www.topgear.com/sites/default/files/images/news-article/carousel/2020/10/3ab732bb9237e57613056f5c624a90f6/rear_side.jpg');
+  background-size: cover;
+  background-position: center;
+}
+
+@media (max-width: 768px) {
+  #search {
+    display: none;
+  }
+}
