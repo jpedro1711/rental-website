@@ -60,7 +60,6 @@ const FormReserva = (parameter: Parameter) => {
   const [dataRetirada, setDataRetirada] = useState('');
   const [dataDevolucao, setDataDevolucao] = useState('');
   const [veiculo, setVeiculo] = useState('');
-  const [numeroCarteira, setNumeroCarteira] = useState('');
   const [observacoes, setObservacoes] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [total, setTotal] = useState(0);
@@ -78,7 +77,6 @@ const FormReserva = (parameter: Parameter) => {
     console.log('Data de Retirada:', veiculo);
     console.log('Data de Retirada:', dataRetirada);
     console.log('Data de Devolução:', dataDevolucao);
-    console.log('Número da Carteira de Motorista:', numeroCarteira);
     console.log('Observações:', observacoes);
 
     const startDate: Date = new Date(dataRetirada);
@@ -98,7 +96,6 @@ const FormReserva = (parameter: Parameter) => {
     setDataRetirada('');
     setDataDevolucao('');
     setVeiculo('');
-    setNumeroCarteira('');
     setObservacoes('');
   };
 
@@ -132,16 +129,6 @@ const FormReserva = (parameter: Parameter) => {
             type="date"
             value={dataDevolucao}
             onChange={(e) => setDataDevolucao(e.target.value)}
-            required
-            className="border border-gray-300 px-2 py-1 rounded w-full"
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block mb-2">Número da Carteira de Motorista:</label>
-          <input
-            type="text"
-            value={numeroCarteira}
-            onChange={(e) => setNumeroCarteira(e.target.value)}
             required
             className="border border-gray-300 px-2 py-1 rounded w-full"
           />

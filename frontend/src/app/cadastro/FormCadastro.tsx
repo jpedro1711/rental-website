@@ -10,12 +10,21 @@ const FormCadastro = () => {
   const [cpf, setCpf] = useState('');
   const [senha, setSenha] = useState('');
   const [confirmarSenha, setConfirmarSenha] = useState('');
+  const [numeroCarteiraDeMotorista, setNumeroCarteiraDeMotorista] =
+    useState('');
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     // Validações
-    if (!nome || !email || !cpf || !senha || !confirmarSenha) {
+    if (
+      !nome ||
+      !email ||
+      !cpf ||
+      !senha ||
+      !confirmarSenha ||
+      !numeroCarteiraDeMotorista
+    ) {
       alert('Por favor, preencha todos os campos.');
       return;
     }
@@ -30,12 +39,14 @@ const FormCadastro = () => {
     console.log('Email:', email);
     console.log('CPF:', cpf);
     console.log('Senha:', senha);
+    console.log('Nº carteira: ', numeroCarteiraDeMotorista);
 
     // Limpar os campos do formulário
     setNome('');
     setEmail('');
     setCpf('');
     setSenha('');
+    setNumeroCarteiraDeMotorista('');
     setConfirmarSenha('');
   };
 
@@ -74,6 +85,18 @@ const FormCadastro = () => {
               pattern="^((\d{3}).(\d{3}).(\d{3})-(\d{2}))*$"
               title="O CPF deve ter o padrão 000.000.000-00"
               onChange={(e) => setCpf(e.target.value)}
+              required
+              className="border border-gray-300 px-2 py-1 rounded w-full"
+            />
+          </div>
+          <div>
+            <label>Número de registro da carteira de motorista:</label>
+            <input
+              type="text"
+              value={numeroCarteiraDeMotorista}
+              pattern="^[0-9]+$"
+              title="O número da carteira de motorista não pode contér letras ou caracteres especiais"
+              onChange={(e) => setNumeroCarteiraDeMotorista(e.target.value)}
               required
               className="border border-gray-300 px-2 py-1 rounded w-full"
             />

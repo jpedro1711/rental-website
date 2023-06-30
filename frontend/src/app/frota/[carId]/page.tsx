@@ -1,7 +1,6 @@
 import Footer from '@/components/Footer';
 import React from 'react';
 import Link from 'next/link';
-import NavCar from './NavCar';
 import LinkToFrota from './reserva/LinkToFrota';
 
 const page = ({ params }: { params: { carId: string } }) => {
