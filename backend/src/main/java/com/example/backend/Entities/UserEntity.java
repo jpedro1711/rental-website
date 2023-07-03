@@ -1,9 +1,12 @@
 package com.example.backend.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.hibernate.annotations.Type;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -18,6 +21,9 @@ public class UserEntity implements Serializable {
     private String cpf;
     private String password;
     private String driverLicenseNumber;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private Set<Reservation> reservations = new HashSet<>();
 
     public UUID getUserId() {
         return userId;

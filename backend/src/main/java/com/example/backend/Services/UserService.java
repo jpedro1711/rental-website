@@ -2,6 +2,7 @@ package com.example.backend.Services;
 import com.example.backend.Entities.UserEntity;
 import com.example.backend.Repositories.UserRepository;
 import com.example.backend.dtos.UserDto;
+import com.example.backend.dtos.UserResponseDto;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Component
 public class UserService {
@@ -18,8 +20,10 @@ public class UserService {
     private UserRepository repository;
 
 
-    public List<UserEntity> findAll() {
-        return repository.findAll();
+    public List<UserResponseDto> findAll() {
+        List<UserEntity> users =  repository.findAll();
+        List<UserResponseDto> usersDto = users.stream().map(x -> new UserResponseDto(x)).collect(Collectors.toList());
+        return usersDto;
     }
 
     public UserEntity findOne(UUID id) {

@@ -1,8 +1,11 @@
 package com.example.backend.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -18,6 +21,38 @@ public class Car implements Serializable {
     private double mileage;
     private String licensePlate;
     private double pricePerDay;
+
+    @ManyToOne
+    @JoinColumn(name = "make_id")
+    private Make make;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "car", cascade = CascadeType.ALL)
+    private Set<Reservation> reservations = new HashSet<>();
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public Set<Reservation> getReservations() {
+        return reservations;
+    }
+
+    public Make getMake() {
+        return make;
+    }
+
+    public void setMake(Make make) {
+        this.make = make;
+    }
 
     public UUID getCarId() {
         return carId;

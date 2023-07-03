@@ -1,8 +1,12 @@
 package com.example.backend.Services;
 
+import com.example.backend.Entities.Car;
 import com.example.backend.Entities.Make;
 import com.example.backend.Entities.Reservation;
+import com.example.backend.Entities.UserEntity;
+import com.example.backend.Repositories.CarRepository;
 import com.example.backend.Repositories.ReservationRepository;
+import com.example.backend.Repositories.UserRepository;
 import com.example.backend.dtos.ReservationDto;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +23,12 @@ public class ReservationService {
     @Autowired
     private ReservationRepository repository;
 
+    @Autowired
+    private CarService carService;
+
+    @Autowired
+    private UserService userService;
+
     public List<Reservation> findAll() {
         return repository.findAll();
     }
@@ -34,6 +44,13 @@ public class ReservationService {
     public ResponseEntity<Reservation> create(ReservationDto data){
         var reservationModel = new Reservation();
         BeanUtils.copyProperties(data, reservationModel);
+        UserEntity u = userService.findOne(data.userId());
+        Car c = carService.findOne(data.carId());
+        if (u == null || c == null) {
+            return null;
+        }
+        reservationModel.setCar(c);
+        reservationModel.setUser(u);
         return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(reservationModel));
     }
 
@@ -44,6 +61,13 @@ public class ReservationService {
         }
         var reservationModel = reservation0.get();
         BeanUtils.copyProperties(data, reservation0);
+        UserEntity u = userService.findOne(data.userId());
+        Car c = carService.findOne(data.carId());
+        if (u == null || c == null) {
+            return null;
+        }
+        reservationModel.setCar(c);
+        reservationModel.setUser(u);
         return repository.save(reservationModel);
     }
 

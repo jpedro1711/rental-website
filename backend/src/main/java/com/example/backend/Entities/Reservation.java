@@ -1,5 +1,6 @@
 package com.example.backend.Entities;
 
+import com.example.backend.dtos.UserResponseDto;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -19,8 +20,33 @@ public class Reservation implements Serializable {
 
     private String observations;
 
+    @ManyToOne
+    @JoinColumn(name = "car_id")
+    private Car car;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private UserEntity user;
+
     public UUID getReservationId() {
         return reservationId;
+    }
+
+    public Car getCar() {
+        return car;
+    }
+
+    public void setCar(Car car) {
+        this.car = car;
+    }
+
+    public void setUser(UserEntity user) {
+        this.user = user;
+    }
+
+    public UserResponseDto getUser() {
+        UserResponseDto u = new UserResponseDto(user);
+        return u;
     }
 
     public void setReservationId(UUID reservationId) {

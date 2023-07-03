@@ -1,6 +1,8 @@
 package com.example.backend.Services;
 
 import com.example.backend.Entities.Car;
+import com.example.backend.Entities.Category;
+import com.example.backend.Entities.Make;
 import com.example.backend.Repositories.CarRepository;
 import com.example.backend.dtos.CarDto;
 import org.springframework.beans.BeanUtils;
@@ -18,6 +20,12 @@ public class CarService {
     @Autowired
     private CarRepository repository;
 
+    @Autowired
+    private CategoryService categoryService;
+
+    @Autowired
+    private MakeService makeService;
+
     public List<Car> findAll() {
         return repository.findAll();
     }
@@ -33,6 +41,13 @@ public class CarService {
     public ResponseEntity<Car> create(CarDto data){
         var carModel = new Car();
         BeanUtils.copyProperties(data, carModel);
+        Category c = categoryService.findOne(data.categoryId());
+        Make m = makeService.findOne(data.makeId());
+        if (c == null || m == null) {
+            return null;
+        }
+        carModel.setCategory(c);
+        carModel.setMake(m);
         return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(carModel));
     }
 
@@ -43,6 +58,14 @@ public class CarService {
         }
         var carModel = car0.get();
         BeanUtils.copyProperties(data, carModel);
+        Category c = categoryService.findOne(data.categoryId());
+        Make m = makeService.findOne(data.makeId());
+        if (c == null || m == null) {
+            return null;
+        }
+        carModel.setCategory(c);
+        carModel.setMake(m);
+
         return repository.save(carModel);
     }
 

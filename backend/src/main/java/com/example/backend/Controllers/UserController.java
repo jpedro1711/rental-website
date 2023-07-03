@@ -6,6 +6,7 @@ import com.example.backend.Services.ReservationService;
 import com.example.backend.Services.UserService;
 import com.example.backend.dtos.ReservationDto;
 import com.example.backend.dtos.UserDto;
+import com.example.backend.dtos.UserResponseDto;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,8 +27,8 @@ public class UserController {
     }
 
     @GetMapping("/users")
-    public ResponseEntity<List<UserEntity>> getAllUsers() {
-        List<UserEntity> users = this.userService.findAll();
+    public ResponseEntity<List<UserResponseDto>> getAllUsers() {
+        List<UserResponseDto> users = this.userService.findAll();
         return ResponseEntity.status(HttpStatus.OK).body(users);
     }
 
