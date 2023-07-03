@@ -15,7 +15,7 @@ import java.util.UUID;
 @RestController
 public class CarController {
     @Autowired
-    CarService carService;
+    private CarService carService;
 
     @PostMapping("/cars")
     public ResponseEntity<Car> saveCar(@RequestBody @Valid CarRecordDto carRecordDto) {
