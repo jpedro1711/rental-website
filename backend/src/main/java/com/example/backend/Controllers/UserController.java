@@ -35,8 +35,9 @@ public class UserController {
     @GetMapping("/users/{id}")
     public ResponseEntity<Object> getOneUser(@PathVariable(value = "id") UUID id) {
         UserEntity user = this.userService.findOne(id);
+        UserResponseDto res = new UserResponseDto(user);
         if (user != null) {
-            return ResponseEntity.ok().body(user);
+            return ResponseEntity.ok().body(res);
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
     }

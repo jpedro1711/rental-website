@@ -1,6 +1,7 @@
 package com.example.backend.Entities;
 
 import com.example.backend.dtos.UserResponseDto;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -20,10 +21,13 @@ public class Reservation implements Serializable {
 
     private String observations;
 
+    private double totalValue;
+
     @ManyToOne
     @JoinColumn(name = "car_id")
     private Car car;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "user_id")
     private UserEntity user;
@@ -42,6 +46,14 @@ public class Reservation implements Serializable {
 
     public void setUser(UserEntity user) {
         this.user = user;
+    }
+
+    public void setTotalValue(double totalValue) {
+        this.totalValue = totalValue;
+    }
+
+    public double getTotalValue() {
+        return totalValue;
     }
 
     public UserResponseDto getUser() {

@@ -37,6 +37,10 @@ public class UserEntity implements Serializable {
         return name;
     }
 
+    public Set<Reservation> getReservations() {
+        return reservations;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
