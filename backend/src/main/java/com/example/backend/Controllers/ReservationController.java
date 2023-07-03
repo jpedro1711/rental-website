@@ -1,12 +1,8 @@
 package com.example.backend.Controllers;
 
-import com.example.backend.Entities.Category;
-import com.example.backend.Entities.Make;
 import com.example.backend.Entities.Reservation;
 import com.example.backend.Services.ReservationService;
-import com.example.backend.dtos.CategoryRecordDto;
-import com.example.backend.dtos.MakeRecordDto;
-import com.example.backend.dtos.ReservationRecordDto;
+import com.example.backend.dtos.ReservationDto;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,7 +18,7 @@ public class ReservationController {
     private ReservationService reservationService;
 
     @PostMapping("/reservations")
-    public ResponseEntity<Reservation> saveReservation(@RequestBody @Valid ReservationRecordDto reservationRecordDto) {
+    public ResponseEntity<Reservation> saveReservation(@RequestBody @Valid ReservationDto reservationRecordDto) {
         return this.reservationService.create(reservationRecordDto);
     }
 
@@ -42,7 +38,7 @@ public class ReservationController {
     }
 
     @PutMapping("/reservations/{id}")
-    public ResponseEntity<Object> updateMake(@PathVariable(value = "id") UUID id, @RequestBody @Valid ReservationRecordDto reservationRecordDto) {
+    public ResponseEntity<Object> updateMake(@PathVariable(value = "id") UUID id, @RequestBody @Valid ReservationDto reservationRecordDto) {
         Reservation reservation = this.reservationService.update(id, reservationRecordDto);
         if (reservation != null) {
             return ResponseEntity.status(HttpStatus.OK).body(reservation);

@@ -2,7 +2,7 @@ package com.example.backend.Services;
 
 import com.example.backend.Entities.Car;
 import com.example.backend.Repositories.CarRepository;
-import com.example.backend.dtos.CarRecordDto;
+import com.example.backend.dtos.CarDto;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,13 +30,13 @@ public class CarService {
         return car0.get();
     }
 
-    public ResponseEntity<Car> create(CarRecordDto data){
+    public ResponseEntity<Car> create(CarDto data){
         var carModel = new Car();
         BeanUtils.copyProperties(data, carModel);
         return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(carModel));
     }
 
-    public Car update(UUID id, CarRecordDto data) {
+    public Car update(UUID id, CarDto data) {
         Optional<Car> car0 = repository.findById(id);
         if (car0.isEmpty()) {
             return null;

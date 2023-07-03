@@ -3,8 +3,7 @@ package com.example.backend.Services;
 import com.example.backend.Entities.Make;
 import com.example.backend.Entities.Reservation;
 import com.example.backend.Repositories.ReservationRepository;
-import com.example.backend.dtos.MakeRecordDto;
-import com.example.backend.dtos.ReservationRecordDto;
+import com.example.backend.dtos.ReservationDto;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,13 +31,13 @@ public class ReservationService {
         return reservation0.get();
     }
 
-    public ResponseEntity<Reservation> create(ReservationRecordDto data){
+    public ResponseEntity<Reservation> create(ReservationDto data){
         var reservationModel = new Reservation();
         BeanUtils.copyProperties(data, reservationModel);
         return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(reservationModel));
     }
 
-    public Reservation update(UUID id, ReservationRecordDto data) {
+    public Reservation update(UUID id, ReservationDto data) {
         Optional<Reservation> reservation0 = repository.findById(id);
         if (reservation0.isEmpty()) {
             return null;

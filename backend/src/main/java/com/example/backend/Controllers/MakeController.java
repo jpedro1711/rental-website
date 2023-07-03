@@ -1,10 +1,8 @@
 package com.example.backend.Controllers;
 
-import com.example.backend.Entities.Car;
 import com.example.backend.Entities.Make;
 import com.example.backend.Services.MakeService;
-import com.example.backend.dtos.CarRecordDto;
-import com.example.backend.dtos.MakeRecordDto;
+import com.example.backend.dtos.MakeDto;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,7 +18,7 @@ public class MakeController {
     private MakeService makeService;
 
     @PostMapping("/makes")
-    public ResponseEntity<Make> saveMake(@RequestBody @Valid MakeRecordDto makeRecordDto) {
+    public ResponseEntity<Make> saveMake(@RequestBody @Valid MakeDto makeRecordDto) {
         return this.makeService.create(makeRecordDto);
     }
 
@@ -40,7 +38,7 @@ public class MakeController {
     }
 
     @PutMapping("/makes/{id}")
-    public ResponseEntity<Object> updateMake(@PathVariable(value = "id") UUID id, @RequestBody @Valid MakeRecordDto makeRecordDto) {
+    public ResponseEntity<Object> updateMake(@PathVariable(value = "id") UUID id, @RequestBody @Valid MakeDto makeRecordDto) {
         Make make = this.makeService.update(id, makeRecordDto);
         if (make != null) {
             return ResponseEntity.status(HttpStatus.OK).body(make);

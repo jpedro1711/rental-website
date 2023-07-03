@@ -2,7 +2,7 @@ package com.example.backend.Controllers;
 
 import com.example.backend.Entities.Car;
 import com.example.backend.Services.CarService;
-import com.example.backend.dtos.CarRecordDto;
+import com.example.backend.dtos.CarDto;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,8 +18,8 @@ public class CarController {
     private CarService carService;
 
     @PostMapping("/cars")
-    public ResponseEntity<Car> saveCar(@RequestBody @Valid CarRecordDto carRecordDto) {
-        return this.carService.create(carRecordDto);
+    public ResponseEntity<Car> saveCar(@RequestBody @Valid CarDto carDto) {
+        return this.carService.create(carDto);
     }
 
     @GetMapping("/cars")
@@ -38,8 +38,8 @@ public class CarController {
     }
 
     @PutMapping("/cars/{id}")
-    public ResponseEntity<Object> updateCar(@PathVariable(value = "id") UUID id, @RequestBody @Valid CarRecordDto carRecordDto) {
-        Car car = this.carService.update(id, carRecordDto);
+    public ResponseEntity<Object> updateCar(@PathVariable(value = "id") UUID id, @RequestBody @Valid CarDto carDto) {
+        Car car = this.carService.update(id, carDto);
         if (car != null) {
             return ResponseEntity.status(HttpStatus.OK).body(car);
         }
@@ -47,7 +47,7 @@ public class CarController {
     }
 
     @DeleteMapping("/cars/{id}")
-    public ResponseEntity<Object> removeCar(@PathVariable(value = "id") UUID id, @RequestBody @Valid CarRecordDto carRecordDto) {
+    public ResponseEntity<Object> removeCar(@PathVariable(value = "id") UUID id, @RequestBody @Valid CarDto carDto) {
         Boolean deleted = this.carService.remove(id);
         if (deleted) {
             return ResponseEntity.status(HttpStatus.OK).body("Car deleted successfully");

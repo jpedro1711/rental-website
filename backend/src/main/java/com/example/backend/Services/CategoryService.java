@@ -2,7 +2,7 @@ package com.example.backend.Services;
 
 import com.example.backend.Entities.Category;
 import com.example.backend.Repositories.CategoryRepository;
-import com.example.backend.dtos.CategoryRecordDto;
+import com.example.backend.dtos.CategoryDto;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,13 +31,13 @@ public class CategoryService {
         return category0.get();
     }
 
-    public ResponseEntity<Category> create(CategoryRecordDto data){
+    public ResponseEntity<Category> create(CategoryDto data){
         var categoryModel = new Category();
         BeanUtils.copyProperties(data, categoryModel);
         return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(categoryModel));
     }
 
-    public Category update(UUID id, CategoryRecordDto data) {
+    public Category update(UUID id, CategoryDto data) {
         Optional<Category> category0 = repository.findById(id);
         if (category0.isEmpty()) {
             return null;

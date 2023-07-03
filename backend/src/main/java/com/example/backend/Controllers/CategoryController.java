@@ -1,10 +1,8 @@
 package com.example.backend.Controllers;
 
 import com.example.backend.Entities.Category;
-import com.example.backend.Entities.Make;
 import com.example.backend.Services.CategoryService;
-import com.example.backend.dtos.CategoryRecordDto;
-import com.example.backend.dtos.MakeRecordDto;
+import com.example.backend.dtos.CategoryDto;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,8 +17,8 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
     @PostMapping("/categories")
-    public ResponseEntity<Category> saveCategory(@RequestBody @Valid CategoryRecordDto categoryRecordDto) {
-        return this.categoryService.create(categoryRecordDto);
+    public ResponseEntity<Category> saveCategory(@RequestBody @Valid CategoryDto categoryDto) {
+        return this.categoryService.create(categoryDto);
     }
 
     @GetMapping("/categories")
@@ -39,8 +37,8 @@ public class CategoryController {
     }
 
     @PutMapping("/categories/{id}")
-    public ResponseEntity<Object> updateCategoru(@PathVariable(value = "id") UUID id, @RequestBody @Valid CategoryRecordDto categoryRecordDto) {
-        Category category = this.categoryService.update(id, categoryRecordDto);
+    public ResponseEntity<Object> updateCategoru(@PathVariable(value = "id") UUID id, @RequestBody @Valid CategoryDto categoryDto) {
+        Category category = this.categoryService.update(id, categoryDto);
         if (category != null) {
             return ResponseEntity.status(HttpStatus.OK).body(category);
         }
