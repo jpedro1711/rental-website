@@ -27,6 +27,7 @@ public class SecurityConfigurations {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/cars").permitAll()
                         .requestMatchers(HttpMethod.POST, "/cars").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/cars").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/cars").hasRole("ADMIN")
@@ -37,6 +38,7 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.PUT, "/makes").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/makes").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/users").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/reservations").hasRole("USER")
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
