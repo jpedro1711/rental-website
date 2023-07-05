@@ -47,7 +47,7 @@ public class CarController {
     }
 
     @DeleteMapping("/cars/{id}")
-    public ResponseEntity<Object> removeCar(@PathVariable(value = "id") UUID id, @RequestBody @Valid CarDto carDto) {
+    public ResponseEntity<Object> removeCar(@PathVariable(value = "id") UUID id) {
         Boolean deleted = this.carService.remove(id);
         if (deleted) {
             return ResponseEntity.status(HttpStatus.OK).body("Car deleted successfully");
