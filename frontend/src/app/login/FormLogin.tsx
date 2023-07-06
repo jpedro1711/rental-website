@@ -3,6 +3,8 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { FormEvent } from 'react';
+import axios from 'axios';
+import { useCookies } from 'react-cookie';
 
 const FormLogin = () => {
   const [email, setEmail] = useState('');
@@ -17,8 +19,14 @@ const FormLogin = () => {
       return;
     }
 
-    console.log('Email:', email);
-    console.log('Senha:', senha);
+    axios
+      .post('http://localhost:8080/auth/login', {
+        email: email,
+        password: senha,
+      })
+      .then((response) => {
+        console.log(response.data);
+      });
   };
 
   return (

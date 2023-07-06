@@ -7,7 +7,7 @@ const page = ({ params }: { params: { carId: string } }) => {
   return (
     <div>
       <LinkToFrota />
-      <FormReserva parameter={Number(params.carId)} />
+      <FormReserva carId={params.carId} />
       <Footer />
     </div>
   );

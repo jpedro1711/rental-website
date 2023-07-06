@@ -2,27 +2,7 @@
 import axios from 'axios';
 import Link from 'next/link';
 import { ChangeEvent, useEffect, useState } from 'react';
-
-interface Make {
-  name: string;
-}
-
-interface Category {
-  categoryId: string;
-  name: string;
-}
-
-interface Car {
-  carId: number;
-  make: Make;
-  model: string;
-  year: number;
-  imageUrl: string;
-  mileage: number;
-  licensePlate: string;
-  category: Category;
-  pricePerDay: number;
-}
+import { Car, Make, Category } from '../globals/global';
 
 const FrotaSection = () => {
   const [selectedCategory, setSelectedCategory] = useState<
