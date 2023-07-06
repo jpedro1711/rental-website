@@ -28,6 +28,7 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
                         .requestMatchers(HttpMethod.GET, "/cars").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/categories").permitAll()
                         .requestMatchers(HttpMethod.POST, "/cars").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/cars").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/cars").hasRole("ADMIN")
