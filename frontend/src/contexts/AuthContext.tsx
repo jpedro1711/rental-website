@@ -39,7 +39,12 @@ export function AuthProvider({ children }: Props) {
   const [user, setUser] = useState<User | null>(null);
   const [isAuthenticated, setisAuthenticated] = useState(false);
   const [error, setError] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const router = useRouter();
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -104,7 +109,7 @@ export function AuthProvider({ children }: Props) {
           }
         });
     } catch (err) {
-      alert('Erro de login: E-mail ou senha incorretos');
+      setShowModal(true);
     }
   }
 
@@ -124,6 +129,22 @@ export function AuthProvider({ children }: Props) {
   return (
     <AuthContext.Provider value={{ user, isAuthenticated, signIn, signOut }}>
       {children}
+      {showModal && (
+        <div className="fixed inset-0 flex items-center justify-center">
+          <div className="fixed inset-0 bg-black opacity-50"></div>
+          <div className="bg-white p-4 rounded-lg relative">
+            <h2 className="text-xl font-bold mb-4">Erro de login</h2>
+            <p>E-mail ou senha incorretos</p>
+            <button
+              type="button"
+              onClick={closeModal}
+              className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mt-4"
+            >
+              Fechar
+            </button>
+          </div>
+        </div>
+      )}
     </AuthContext.Provider>
   );
 }
