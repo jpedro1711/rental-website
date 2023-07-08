@@ -2,14 +2,17 @@ import React from 'react';
 import NavFrota from '../frota/NavFrota';
 import Footer from '@/components/Footer';
 import FormCadastro from './FormCadastro';
+import { AuthProvider } from '@/contexts/AuthContext';
 
 const page = () => {
   return (
-    <div>
-      <NavFrota />
-      <FormCadastro />
-      <Footer />
-    </div>
+    <AuthProvider>
+      <div>
+        <NavFrota />
+        <FormCadastro />
+        <Footer />
+      </div>
+    </AuthProvider>
   );
 };
 

@@ -8,10 +8,12 @@ import Reservas from './Reservas';
 
 const page = () => {
   return (
-    <div>
+    <div className="flex flex-col min-h-screen">
       <AuthProvider>
         <NavFrota />
-        <Reservas />
+        <main className="flex-grow mb-10">
+          <Reservas />
+        </main>
         <Footer />
       </AuthProvider>
     </div>

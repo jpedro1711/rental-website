@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useContext } from 'react';
 import { MenuOutlined } from '@ant-design/icons';
@@ -10,7 +10,7 @@ import { AuthContext } from '@/contexts/AuthContext';
 
 const Nav = () => {
   const [visible, setVisible] = useState(false);
-  const Auth = useContext(AuthContext);
+  const { carregando, signOut, user } = useContext(AuthContext);
 
   const showDrawer = () => {
     setVisible(true);
@@ -21,12 +21,12 @@ const Nav = () => {
   };
 
   function handleSignOut() {
-    Auth.signOut();
+    signOut();
   }
 
   return (
     <div className="rounded">
-      <header className="flex justify-between items-center bg-orange-400 px-4 py-8">
+      <header className="flex justify-between items-center bg-orange-500 px-4 py-8">
         <a href="/" className="text-2xl font-semibold text-orange-950">
           Rental
         </a>
@@ -34,14 +34,15 @@ const Nav = () => {
           <MenuOutlined className="text-white text-2xl" onClick={showDrawer} />
         </div>
         <nav className="hidden lg:flex justify-between items-center gap-4">
-          {Auth.user ? (
+          {user && !carregando && (
             <button
               onClick={handleSignOut}
               className="text-orange-950 rounded px-8 py-2 bg-orange-50 hover:bg-orange-100 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300"
             >
               Logout
             </button>
-          ) : (
+          )}
+          {!user && !carregando && (
             <>
               <a
                 href="/cadastro"
@@ -72,14 +73,15 @@ const Nav = () => {
         </nav>
         <Drawer placement="right" onClose={onClose} open={visible}>
           <div className="flex flex-col items-center">
-            {Auth.user ? (
+            {user && !carregando && (
               <button
                 onClick={handleSignOut}
                 className="w-full mb-4 text-orange-950 hover:text-orange-700 text-2xl text-left"
               >
                 Logout
               </button>
-            ) : (
+            )}
+            {!user && !carregando && (
               <>
                 <a
                   href="/cadastro"

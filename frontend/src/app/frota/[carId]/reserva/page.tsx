@@ -8,13 +8,13 @@ import { AuthContext } from '@/contexts/AuthContext';
 import { AuthProvider } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
 
-const page = ({ params }: { params: { carId: string } }) => {
+const page: any = ({ params }: { params: { carId: string } }) => {
   const auth = useContext(AuthContext);
   const router = useRouter();
 
   useEffect(() => {
-    console.log(auth.isAuthenticated);
-  }, [auth.isAuthenticated]);
+    console.log(auth.carregando);
+  }, [auth]);
 
   return (
     <AuthProvider>

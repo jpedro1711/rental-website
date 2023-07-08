@@ -3,7 +3,8 @@ import React, { useContext, useEffect, useState } from 'react';
 
 const Reservas = () => {
   const [reservations, setReservations] = useState<any[]>([]);
-  const { user } = useContext(AuthContext);
+  const { user, carregando } = useContext(AuthContext);
+  const [loading, setIsLoading] = useState<Boolean>(true);
 
   useEffect(() => {
     if (user) {
@@ -11,7 +12,15 @@ const Reservas = () => {
     }
   }, [user]);
 
-  if (user && reservations.length === 0) {
+  useEffect(() => {
+    if (carregando) {
+      setIsLoading(true);
+    } else {
+      setIsLoading(false);
+    }
+  }, [carregando]);
+
+  if ((user && reservations.length === 0) || (!user && !carregando)) {
     return (
       <div className="h-screen flex justify-center items-center">
         <div className="bg-white rounded p-4 shadow">
@@ -30,9 +39,21 @@ const Reservas = () => {
     );
   }
 
+  if (loading) {
+    return (
+      <div className="h-screen flex justify-center items-center">
+        <div className="bg-white rounded p-4 shadow">
+          <p className="text-center text-gray-700 mb-2">
+            Carregando as suas reservas...
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="h-screen p-5">
-      <h1 className="text-2xl font-bold mb-4">Reservas</h1>
+    <div className="p-5">
+      <h1 className="text-2xl font-bold mb-4">Reservas de {user?.email}</h1>
       {reservations.map((reservation) => (
         <div
           key={reservation.reservationId}

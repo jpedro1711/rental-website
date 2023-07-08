@@ -5,6 +5,8 @@ import React, { useContext, useEffect, useState } from 'react';
 import { FormEvent } from 'react';
 import axios from 'axios';
 import { AuthContext } from '@/contexts/AuthContext';
+import { parseCookies } from 'nookies';
+import { headers } from 'next/dist/client/components/headers';
 import { useRouter } from 'next/navigation';
 
 type User = {
@@ -26,9 +28,10 @@ const FormReserva = (props: Props) => {
   const [veiculo, setVeiculo] = useState('');
   const [observacoes, setObservacoes] = useState('');
   const [showModal, setShowModal] = useState(false);
-  const [total, setTotal] = useState(0);
+  const [total, setTotal] = useState('');
   const [isAuthenticated, setisAuthenticated] = useState(false);
-  const { user } = useContext(AuthContext);
+  const [loading, setLoading] = useState<Boolean>(true);
+  const { user, carregando } = useContext(AuthContext);
   const router = useRouter();
 
   useEffect(() => {
@@ -38,6 +41,14 @@ const FormReserva = (props: Props) => {
       setisAuthenticated(false);
     }
   }, [user]);
+
+  useEffect(() => {
+    if (carregando) {
+      setLoading(true);
+    } else {
+      setLoading(false);
+    }
+  }, [carregando]);
 
   useEffect(() => {
     axios
@@ -70,10 +81,31 @@ const FormReserva = (props: Props) => {
 
     if (carData) {
       const totalPrice = totalDays * carData.pricePerDay;
-      setTotal(totalPrice);
+      setTotal(totalPrice.toString());
+      const { rentalAuthToken: token } = parseCookies();
+      axios
+        .post(
+          'http://localhost:8080/reservations',
+          {
+            startDate: startDate,
+            endDate: endDate,
+            totalValue: totalPrice.toString(),
+            userId: user?.userId,
+            carId: carData?.carId,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+        .then((res) => {
+          setShowModal(true);
+        })
+        .catch((err) => {
+          alert('Erro ao cadastrar reserva, tente novamente.');
+        });
     }
-
-    setShowModal(true);
   };
 
   const closeModal = () => {
@@ -83,9 +115,10 @@ const FormReserva = (props: Props) => {
     setDataDevolucao('');
     setVeiculo('');
     setObservacoes('');
+    router.push('/reservas');
   };
 
-  if (!user) {
+  if (!user && !loading) {
     return (
       <div className="h-screen flex justify-center items-center">
         <div className="bg-white rounded p-4 shadow">
@@ -95,6 +128,18 @@ const FormReserva = (props: Props) => {
           <a href="/login" className="text-blue-500 hover:text-blue-600">
             Fazer login
           </a>
+        </div>
+      </div>
+    );
+  }
+
+  if (loading) {
+    return (
+      <div className="h-screen flex justify-center items-center">
+        <div className="bg-white rounded p-4 shadow">
+          <p className="text-center text-gray-700 mb-2">
+            Carregando os dados da reserva...
+          </p>
         </div>
       </div>
     );

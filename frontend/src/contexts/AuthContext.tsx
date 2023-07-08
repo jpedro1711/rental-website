@@ -22,6 +22,7 @@ type AuthContextType = {
   isAuthenticated: boolean;
   signIn: (data: signInData) => void;
   signOut: () => void;
+  carregando: boolean;
 };
 
 type signInData = {
@@ -40,10 +41,16 @@ export function AuthProvider({ children }: Props) {
   const [isAuthenticated, setisAuthenticated] = useState(false);
   const [error, setError] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
+  const [carregando, setCarregando] = useState(true);
   const router = useRouter();
 
   const closeModal = () => {
     setShowModal(false);
+  };
+
+  const closeLogoutModal = () => {
+    setShowLogoutModal(false);
   };
 
   useEffect(() => {
@@ -61,8 +68,12 @@ export function AuthProvider({ children }: Props) {
           setisAuthenticated(true);
         } catch (error) {
           console.error('Error fetching user profile:', error);
+          setisAuthenticated(false); // Define como não autenticado em caso de erro
         }
+      } else {
+        setisAuthenticated(false); // Define como não autenticado se o token não estiver presente
       }
+      setCarregando(false);
     };
 
     fetchData();
@@ -82,32 +93,21 @@ export function AuthProvider({ children }: Props) {
         maxAge: 60 * 60 * 1, // 1 hour
       });
 
-      axios
-        .get<User>('http://localhost:8080/auth/profile', {
+      const response = await axios.get<User>(
+        'http://localhost:8080/auth/profile',
+        {
           headers: {
             Authorization: `Bearer ${data.token}`,
           },
-        })
-        .then((response) => {
-          setUser(response.data);
-          setisAuthenticated(true);
-          console.log(response.data);
+        }
+      );
 
-          const url = '/';
-          router.push(url);
-        })
-        .catch(function (error) {
-          if (error.response) {
-            console.log(error.response.data.error);
-            console.log(error.response.status);
-            console.log(error.response.headers);
-          } else if (error.request) {
-            console.log(error.request);
-          } else {
-            // Something happened in setting up the request that triggered an Error
-            console.log('Error', error.message);
-          }
-        });
+      setUser(response.data);
+      setisAuthenticated(true);
+      console.log(response.data);
+
+      const url = '/';
+      router.push(url);
     } catch (err) {
       setShowModal(true);
     }
@@ -123,11 +123,13 @@ export function AuthProvider({ children }: Props) {
 
     const url = '/';
     router.push(url);
-    alert('Logout realizado com sucesso!');
+    setShowLogoutModal(true);
   }
 
   return (
-    <AuthContext.Provider value={{ user, isAuthenticated, signIn, signOut }}>
+    <AuthContext.Provider
+      value={{ user, isAuthenticated, signIn, signOut, carregando }}
+    >
       {children}
       {showModal && (
         <div className="fixed inset-0 flex items-center justify-center">
@@ -138,6 +140,21 @@ export function AuthProvider({ children }: Props) {
             <button
               type="button"
               onClick={closeModal}
+              className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mt-4"
+            >
+              Fechar
+            </button>
+          </div>
+        </div>
+      )}
+      {showLogoutModal && (
+        <div className="fixed inset-0 flex items-center justify-center">
+          <div className="fixed inset-0 bg-black opacity-50"></div>
+          <div className="bg-white p-4 rounded-lg relative">
+            <h2 className="text-xl mb-4">Logout realizado com sucesso</h2>
+            <button
+              type="button"
+              onClick={closeLogoutModal}
               className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mt-4"
             >
               Fechar

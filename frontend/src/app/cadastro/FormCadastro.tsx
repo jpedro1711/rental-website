@@ -1,8 +1,11 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Link from 'next/link';
 import { FormEvent } from 'react';
+import axios from 'axios';
+import { AuthContext, AuthProvider } from '@/contexts/AuthContext';
+import { useRouter } from 'next/navigation';
 
 const FormCadastro = () => {
   const [nome, setNome] = useState('');
@@ -12,6 +15,9 @@ const FormCadastro = () => {
   const [confirmarSenha, setConfirmarSenha] = useState('');
   const [numeroCarteiraDeMotorista, setNumeroCarteiraDeMotorista] =
     useState('');
+  const { signIn } = useContext(AuthContext);
+  const [showModal, setShowModal] = useState(false);
+  const router = useRouter();
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -34,12 +40,31 @@ const FormCadastro = () => {
       return;
     }
 
-    // Enviar os dados para o servidor, realizar ações, etc.
     console.log('Nome:', nome);
     console.log('Email:', email);
     console.log('CPF:', cpf);
     console.log('Senha:', senha);
     console.log('Nº carteira: ', numeroCarteiraDeMotorista);
+    axios
+      .post('http://localhost:8080/auth/register', {
+        email: email,
+        password: senha,
+        role: 'USER',
+        name: nome,
+        cpf: cpf,
+        driverLicenserNumber: numeroCarteiraDeMotorista,
+      })
+      .then((res) => {
+        const data = {
+          email: email,
+          password: senha,
+        };
+        signIn(data);
+        router.push('/');
+      })
+      .catch((err) => {
+        setShowModal(true);
+      });
 
     // Limpar os campos do formulário
     setNome('');
@@ -48,6 +73,10 @@ const FormCadastro = () => {
     setSenha('');
     setNumeroCarteiraDeMotorista('');
     setConfirmarSenha('');
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
   };
 
   return (
@@ -134,6 +163,24 @@ const FormCadastro = () => {
           </div>
         </form>
       </div>
+      {showModal && (
+        <div className="fixed inset-0 flex items-center justify-center">
+          <div className="fixed inset-0 bg-black opacity-50"></div>
+          <div className="bg-white p-4 rounded-lg relative">
+            <h2 className="text-xl font-bold mb-4">
+              Erro ao realizar cadastro
+            </h2>
+            <p>O e-mail que você quer cadastrar já está em uso </p>
+            <button
+              type="button"
+              onClick={closeModal}
+              className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mt-4"
+            >
+              Fechar
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
