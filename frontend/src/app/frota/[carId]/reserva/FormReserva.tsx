@@ -1,36 +1,54 @@
 'use client';
 
 import { Car } from '@/app/globals/global';
-import React, { useEffect } from 'react';
-import { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { FormEvent } from 'react';
 import axios from 'axios';
+import { AuthContext } from '@/contexts/AuthContext';
+import { useRouter } from 'next/navigation';
+
+type User = {
+  userId: string;
+  email: string;
+  roles: string;
+  reservations: [];
+};
 
 interface Props {
   carId: string;
+  client: string | undefined;
 }
 
-const FormReserva = (params: Props) => {
-  useEffect(() => {
-    console.log(params.carId);
-    axios
-      .get(`http://localhost:8080/cars/${params.carId}`)
-      .then((res) => {
-        setCarData(res.data);
-        console.log(res.data);
-      })
-      .catch((error) => {
-        console.error('Error fetching car data:', error);
-      });
-  }, []);
-
-  const [carData, setCarData] = useState<Car>();
+const FormReserva = (props: Props) => {
+  const [carData, setCarData] = useState<Car | null>(null);
   const [dataRetirada, setDataRetirada] = useState('');
   const [dataDevolucao, setDataDevolucao] = useState('');
   const [veiculo, setVeiculo] = useState('');
   const [observacoes, setObservacoes] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [total, setTotal] = useState(0);
+  const [isAuthenticated, setisAuthenticated] = useState(false);
+  const { user } = useContext(AuthContext);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (user) {
+      setisAuthenticated(true);
+    } else {
+      setisAuthenticated(false);
+    }
+  }, [user]);
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:8080/cars/${props.carId}`)
+      .then((res) => {
+        setCarData(res.data);
+      })
+      .catch((error) => {
+        console.error('Error fetching car data:', error);
+      });
+  }, [props.carId, user]);
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -40,9 +58,6 @@ const FormReserva = (params: Props) => {
       return;
     }
 
-    // Realizar ações com os dados do formulário, como enviar para um servidor, etc.
-    // Por enquanto, apenas exibindo os valores no console:
-    console.log('Data de Retirada:', veiculo);
     console.log('Data de Retirada:', dataRetirada);
     console.log('Data de Devolução:', dataDevolucao);
     console.log('Observações:', observacoes);
@@ -52,6 +67,7 @@ const FormReserva = (params: Props) => {
     const totalDays: number = Math.ceil(
       (endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24)
     );
+
     if (carData) {
       const totalPrice = totalDays * carData.pricePerDay;
       setTotal(totalPrice);
@@ -62,21 +78,50 @@ const FormReserva = (params: Props) => {
 
   const closeModal = () => {
     setShowModal(false);
-    //Limpar os campos do formulário
+    // Limpar os campos do formulário
     setDataRetirada('');
     setDataDevolucao('');
     setVeiculo('');
     setObservacoes('');
   };
-  if (carData == null) return null;
+
+  if (!user) {
+    return (
+      <div className="h-screen flex justify-center items-center">
+        <div className="bg-white rounded p-4 shadow">
+          <p className="text-center text-gray-700 mb-2">
+            Você precisa estar autenticado para realizar a reserva!
+          </p>
+          <a href="/login" className="text-blue-500 hover:text-blue-600">
+            Fazer login
+          </a>
+        </div>
+      </div>
+    );
+  }
+
+  if (!carData) {
+    return null;
+  }
+
   return (
     <div className="max-w-md mx-auto h-screen p-2">
       <h1 className="text-2xl font-bold my-4">Reserva de Carro</h1>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
+          <label className="block mb-2">Cliente:</label>
+          <input
+            type="text"
+            value={user?.email}
+            onChange={(e) => setVeiculo(e.target.value)}
+            disabled
+            className="border border-gray-300 px-2 py-1 w-full rounded"
+          />
+        </div>
+        <div className="mb-4">
           <label className="block mb-2">Veículo:</label>
           <input
-            type="select"
+            type="text"
             value={carData.model}
             onChange={(e) => setVeiculo(e.target.value)}
             disabled

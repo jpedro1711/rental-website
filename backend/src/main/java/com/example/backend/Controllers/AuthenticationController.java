@@ -5,18 +5,17 @@ import com.example.backend.Repositories.UserRepository;
 import com.example.backend.dtos.AuthenticationDto;
 import com.example.backend.dtos.LoginResponseDto;
 import com.example.backend.dtos.RegisterDto;
+import com.example.backend.dtos.UserResponseDto;
 import com.example.backend.infra.security.TokenService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
@@ -37,10 +36,9 @@ public class AuthenticationController {
         var auth = this.authenticationManager.authenticate(usernamePassword);
 
         var token = tokenService.generateToken((UserEntity) auth.getPrincipal());
-        var id = ((UserEntity) auth.getPrincipal()).getUserId();
 
 
-        return ResponseEntity.ok(new LoginResponseDto(token, id));
+        return ResponseEntity.ok(new LoginResponseDto(token));
     }
 
     @PostMapping("/register")
@@ -53,5 +51,16 @@ public class AuthenticationController {
         this.repository.save(newUser);
 
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/profile")
+    public ResponseEntity getUserWithToken(@RequestHeader("Authorization") String authorizationHeader) {
+        String token = authorizationHeader.replace("Bearer ", "");
+        var tokenvalidated = tokenService.validateToken(token);
+        if (tokenvalidated == "") {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+        UserResponseDto userData = tokenService.extractUserData(token);
+        return ResponseEntity.status(HttpStatus.OK).body(userData);
     }
 }

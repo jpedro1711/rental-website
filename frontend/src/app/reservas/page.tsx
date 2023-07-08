@@ -1,15 +1,19 @@
-import React from 'react';
+'use client';
+
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import NavFrota from '../frota/NavFrota';
 import Footer from '@/components/Footer';
+import { AuthProvider } from '@/contexts/AuthContext';
+import Reservas from './Reservas';
 
 const page = () => {
   return (
     <div>
-      <NavFrota />
-      <p className="h-screen flex justify-center items-center">
-        Não existem reservas
-      </p>
-      <Footer />
+      <AuthProvider>
+        <NavFrota />
+        <Reservas />
+        <Footer />
+      </AuthProvider>
     </div>
   );
 };

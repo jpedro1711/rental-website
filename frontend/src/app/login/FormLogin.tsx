@@ -1,14 +1,20 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Link from 'next/link';
 import { FormEvent } from 'react';
-import axios from 'axios';
-import { useCookies } from 'react-cookie';
+import { AuthContext } from '@/contexts/AuthContext';
+
+type data = {
+  email: string;
+  password: string;
+};
 
 const FormLogin = () => {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
+  const [error, setError] = useState('');
+  const Auth = useContext(AuthContext);
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -19,16 +25,17 @@ const FormLogin = () => {
       return;
     }
 
-    axios
-      .post('http://localhost:8080/auth/login', {
-        email: email,
-        password: senha,
-      })
-      .then((response) => {
-        console.log(response.data);
-      });
+    const data = {
+      email: email,
+      password: senha,
+    };
+
+    handleSignIn(data);
   };
 
+  async function handleSignIn(data: data) {
+    Auth.signIn(data);
+  }
   return (
     <div>
       <div className="max-w-md mx-auto h-screen p-2">

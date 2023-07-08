@@ -1,12 +1,15 @@
 import React from 'react';
 import NavFrota from './NavFrota';
 import FrotaSection from './FrotaSection';
+import { AuthProvider } from '@/contexts/AuthContext';
 
 const page = () => {
   return (
     <div>
-      <NavFrota />
-      <FrotaSection />
+      <AuthProvider>
+        <NavFrota />
+        <FrotaSection />
+      </AuthProvider>
     </div>
   );
 };

@@ -40,6 +40,7 @@ public class SecurityConfigurations {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/auth/profile").permitAll()
                         .requestMatchers(HttpMethod.GET, "/cars").permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/cars/**")).permitAll()
                         .requestMatchers(HttpMethod.GET, "/categories").permitAll()

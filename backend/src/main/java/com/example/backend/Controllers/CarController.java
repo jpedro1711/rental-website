@@ -37,6 +37,13 @@ public class CarController {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Car not found");
     }
 
+    @GetMapping("/cars/name/{name}")
+    public ResponseEntity<Object> getCarByName(@PathVariable(value = "name") String name) {
+        List<Car> cars = this.carService.findByName(name);
+
+        return ResponseEntity.ok().body(cars);
+    }
+
     @PutMapping("/cars/{id}")
     public ResponseEntity<Object> updateCar(@PathVariable(value = "id") UUID id, @RequestBody @Valid CarDto carDto) {
         Car car = this.carService.update(id, carDto);

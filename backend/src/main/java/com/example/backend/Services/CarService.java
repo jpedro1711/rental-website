@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -37,6 +38,17 @@ public class CarService {
             return null;
         }
         return car0.get();
+    }
+
+    public List<Car> findByName(String name) {
+        List<Car> cars = repository.findAll();
+        List<Car> result = new ArrayList<>();
+        for (Car c: cars) {
+            if (c.getModel().equals(name)) {
+                result.add(c);
+            }
+        }
+        return result;
     }
 
     public ResponseEntity<Car> create(CarDto data){

@@ -28,7 +28,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src/components/Nav.jsx",
+    "src/components/Nav.tsx",
     "src/app/login/FormLogin.tsx",
     "src/components/SectionHome.jsx",
     "src/app/frota/FrotaSection.tsx",

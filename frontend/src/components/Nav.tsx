@@ -2,12 +2,15 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import { useContext } from 'react';
 import { MenuOutlined } from '@ant-design/icons';
 import { Drawer } from 'antd';
 import '../app/styles.css';
+import { AuthContext } from '@/contexts/AuthContext';
 
 const Nav = () => {
   const [visible, setVisible] = useState(false);
+  const Auth = useContext(AuthContext);
 
   const showDrawer = () => {
     setVisible(true);
@@ -16,6 +19,10 @@ const Nav = () => {
   const onClose = () => {
     setVisible(false);
   };
+
+  function handleSignOut() {
+    Auth.signOut();
+  }
 
   return (
     <div className="rounded">
@@ -27,18 +34,29 @@ const Nav = () => {
           <MenuOutlined className="text-white text-2xl" onClick={showDrawer} />
         </div>
         <nav className="hidden lg:flex justify-between items-center gap-4">
-          <a
-            href="/cadastro"
-            className="text-orange-950 rounded px-8 py-2 bg-orange-50 hover:bg-orange-100 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300"
-          >
-            Cadastro
-          </a>
-          <a
-            href="/login"
-            className="text-orange-950 rounded px-8 py-2 bg-orange-50 hover:bg-orange-100 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300"
-          >
-            Login
-          </a>
+          {Auth.user ? (
+            <button
+              onClick={handleSignOut}
+              className="text-orange-950 rounded px-8 py-2 bg-orange-50 hover:bg-orange-100 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300"
+            >
+              Logout
+            </button>
+          ) : (
+            <>
+              <a
+                href="/cadastro"
+                className="text-orange-950 rounded px-8 py-2 bg-orange-50 hover:bg-orange-100 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300"
+              >
+                Cadastro
+              </a>
+              <a
+                href="/login"
+                className="text-orange-950 rounded px-8 py-2 bg-orange-50 hover:bg-orange-100 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300"
+              >
+                Login
+              </a>
+            </>
+          )}
           <a
             href="/frota"
             className="text-orange-950 rounded px-8 py-2 bg-orange-50 hover:bg-orange-100 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300"
@@ -54,20 +72,31 @@ const Nav = () => {
         </nav>
         <Drawer placement="right" onClose={onClose} open={visible}>
           <div className="flex flex-col items-center">
-            <a
-              href="/cadastro"
-              onClick={onClose}
-              className="w-full mb-4 text-orange-950 hover:text-orange-700 text-2xl"
-            >
-              Cadastro
-            </a>
-            <a
-              href="/login"
-              onClick={onClose}
-              className="w-full mb-4 text-orange-950 hover:text-orange-700 text-2xl"
-            >
-              Login
-            </a>
+            {Auth.user ? (
+              <button
+                onClick={handleSignOut}
+                className="w-full mb-4 text-orange-950 hover:text-orange-700 text-2xl text-left"
+              >
+                Logout
+              </button>
+            ) : (
+              <>
+                <a
+                  href="/cadastro"
+                  onClick={onClose}
+                  className="w-full mb-4 text-orange-950 hover:text-orange-700 text-2xl"
+                >
+                  Cadastro
+                </a>
+                <a
+                  href="/login"
+                  onClick={onClose}
+                  className="w-full mb-4 text-orange-950 hover:text-orange-700 text-2xl"
+                >
+                  Login
+                </a>
+              </>
+            )}
             <a
               href="/frota"
               onClick={onClose}

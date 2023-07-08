@@ -7,6 +7,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +34,11 @@ public class UserService {
             return null;
         }
         return user0.get();
+    }
+
+    public UserEntity findByEmail(String email) {
+        UserEntity user0 = (UserEntity) repository.findByEmail(email);
+        return user0;
     }
 
     public ResponseEntity<UserEntity> create(UserDto data){
