@@ -70,6 +70,14 @@ const Nav = () => {
           >
             Minhas Reservas
           </a>
+          {user && user.roles === 'ADMIN' ? (
+            <a
+              href="/dashboard"
+              className="text-orange-950 rounded px-8 py-2 bg-orange-50 hover:bg-orange-100 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300"
+            >
+              admin
+            </a>
+          ) : null}
         </nav>
         <Drawer placement="right" onClose={onClose} open={visible}>
           <div className="flex flex-col items-center">

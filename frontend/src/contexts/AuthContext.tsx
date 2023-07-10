@@ -106,13 +106,7 @@ export function AuthProvider({ children }: Props) {
       setisAuthenticated(true);
       console.log(response.data);
 
-      if (user) {
-        if (user.roles == 'ADMIN') {
-          router.push('/dashboard');
-        } else {
-          router.push('/');
-        }
-      }
+      router.push('/');
     } catch (err) {
       setShowModal(true);
     }

@@ -1,12 +1,14 @@
-import React from 'react';
+'use client';
+import { AuthProvider } from '@/contexts/AuthContext';
+import axios from 'axios';
+import React, { useEffect } from 'react';
+import Navigation from './Navigation';
 
 const page = () => {
   return (
-    <div>
-      Dashboard
-      <a href="/dashboard/listar-carros">Carros</a>
-      <a href="">Categorias</a>
-    </div>
+    <AuthProvider>
+      <Navigation />
+    </AuthProvider>
   );
 };
 
