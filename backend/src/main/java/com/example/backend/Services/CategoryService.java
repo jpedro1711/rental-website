@@ -1,6 +1,8 @@
 package com.example.backend.Services;
 
+import com.example.backend.Entities.Car;
 import com.example.backend.Entities.Category;
+import com.example.backend.Repositories.CarRepository;
 import com.example.backend.Repositories.CategoryRepository;
 import com.example.backend.dtos.CategoryDto;
 import org.springframework.beans.BeanUtils;
@@ -51,6 +53,9 @@ public class CategoryService {
     public boolean remove(UUID id) {
         Optional<Category> category0 = repository.findById(id);
         if (category0.isEmpty()) {
+            return false;
+        }
+        if (category0.get().getCars().size() > 0) {
             return false;
         }
         repository.delete(category0.get());

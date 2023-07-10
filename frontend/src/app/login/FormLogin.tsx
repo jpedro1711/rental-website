@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { FormEvent } from 'react';
 import { AuthContext } from '@/contexts/AuthContext';
@@ -14,9 +14,12 @@ const FormLogin = () => {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [error, setError] = useState('');
+  const [submited, setSubmited] = useState(false);
+  const [loading, setLoading] = useState(false);
   const Auth = useContext(AuthContext);
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    setSubmited(true);
     e.preventDefault();
 
     // Validações
@@ -33,7 +36,11 @@ const FormLogin = () => {
     handleSignIn(data);
   };
 
-  async function handleSignIn(data: data) {
+  useEffect(() => {
+    console.log(Auth.carregando);
+  }, [Auth.carregando]);
+
+  function handleSignIn(data: data) {
     Auth.signIn(data);
   }
   return (
@@ -66,7 +73,7 @@ const FormLogin = () => {
               type="submit"
               className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mt-4"
             >
-              Entrar
+              {submited ? 'carregando...' : 'enviar'}
             </button>
             <Link
               href="/cadastro"

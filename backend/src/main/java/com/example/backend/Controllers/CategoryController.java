@@ -51,6 +51,6 @@ public class CategoryController {
         if (deleted) {
             return ResponseEntity.status(HttpStatus.OK).body("Category deleted successfully");
         }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Category not found");
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Category was not found or has associations with some vehicle");
     }
 }

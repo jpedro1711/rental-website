@@ -1,12 +1,12 @@
-'use client';
+import React from 'react';
+import ListarCategorias from './ListarCategorias';
 import { AuthProvider } from '@/contexts/AuthContext';
-import ListarCarros from './ListarCarros';
 
 const page = () => {
   return (
     <div>
       <AuthProvider>
-        <ListarCarros />
+        <ListarCategorias />
       </AuthProvider>
     </div>
   );

@@ -1,13 +1,12 @@
-'use client';
 import React from 'react';
-import EditarCarro from './EditarCarro';
+import EditarCategoria from './EditarCategoria';
 import { AuthProvider } from '@/contexts/AuthContext';
 
-const page = ({ params }: { params: { carId: string } }) => {
+const page = ({ params }: { params: { categoryId: string } }) => {
   return (
     <div>
       <AuthProvider>
-        <EditarCarro carId={params.carId} />
+        <EditarCategoria categoryId={params.categoryId} />
       </AuthProvider>
     </div>
   );

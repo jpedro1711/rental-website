@@ -3,25 +3,36 @@ import { useRouter } from 'next/navigation';
 import React, { useContext, useEffect } from 'react';
 
 const Navigation = () => {
-  const { user } = useContext(AuthContext);
+  const { user, carregando } = useContext(AuthContext);
   const router = useRouter();
 
   useEffect(() => {
-    if (!user) {
-      return;
+    console.log(carregando);
+    if (!carregando) {
+      if (!user) {
+        router.push('/');
+      }
+      if (user && user.roles != 'ADMIN') {
+        router.push('/');
+      }
     }
-    if (user?.roles === 'USER') {
-      router.push('/');
-    }
-  }, [user]);
+  }, [carregando]);
 
-  if (!user || user.roles != 'ADMIN') return null;
+  if (carregando) return null;
+  if (!carregando && !user) return null;
+
   return (
-    <div>
-      <div>
-        Dashboard
-        <a href="/dashboard/listar-carros">Carros</a>
-        <a href="">Categorias</a>
+    <div className="bg-gray-200 p-4">
+      <div className="flex items-center justify-between">
+        <h1 className="text-2xl font-semibold">Dashboard</h1>
+        <div className="space-x-4">
+          <a href="/dashboard/listar-carros" className="text-blue-500">
+            Carros
+          </a>
+          <a href="/dashboard/listar-categorias" className="text-blue-500">
+            Categorias
+          </a>
+        </div>
       </div>
     </div>
   );

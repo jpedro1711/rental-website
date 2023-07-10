@@ -81,6 +81,7 @@ export function AuthProvider({ children }: Props) {
 
   async function signIn({ email, password }: signInData) {
     try {
+      setCarregando(true);
       const { data } = await axios.post<Response>(
         'http://localhost:8080/auth/login',
         {
@@ -105,6 +106,7 @@ export function AuthProvider({ children }: Props) {
       setUser(response.data);
       setisAuthenticated(true);
       console.log(response.data);
+      setCarregando(false);
 
       router.push('/');
     } catch (err) {
