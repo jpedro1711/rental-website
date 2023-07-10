@@ -46,7 +46,9 @@ const CadastrarCategoria = () => {
           router.push('/dashboard/listar-categorias');
         })
         .catch((err) => {
-          alert('Erro ao cadastrar categoria');
+          alert(
+            'Erro ao cadastrar categoria, verifique se essa categoria já foi cadastrada'
+          );
         });
     }
 

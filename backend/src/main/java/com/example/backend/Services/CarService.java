@@ -51,7 +51,13 @@ public class CarService {
         return result;
     }
 
-    public ResponseEntity<Car> create(CarDto data){
+    public ResponseEntity create(CarDto data){
+        List<Car> cars = this.findAll();
+        for (Car c: cars) {
+            if (c.getLicensePlate().equals(data.licensePlate())) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("This car already exists");
+            }
+        }
         var carModel = new Car();
         BeanUtils.copyProperties(data, carModel);
         Category c = categoryService.findOne(data.categoryId());

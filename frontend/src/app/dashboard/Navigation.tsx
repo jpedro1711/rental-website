@@ -25,6 +25,9 @@ const Navigation = () => {
     <div className="bg-gray-200 p-4">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-semibold">Dashboard</h1>
+        <a href="/" className="text-gray-500">
+          Voltar ao site
+        </a>
         <div className="space-x-4">
           <a href="/dashboard/listar-carros" className="text-blue-500">
             Carros

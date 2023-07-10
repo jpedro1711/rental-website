@@ -93,7 +93,9 @@ const CadastrarCarro = () => {
         router.push('/dashboard/listar-carros');
       })
       .catch((err) => {
-        alert('Erro ao cadastrar veículo');
+        alert(
+          'Erro ao cadastrar veículo, verifique se já não existe um veículo com essa placa'
+        );
       });
 
     console.log(data);

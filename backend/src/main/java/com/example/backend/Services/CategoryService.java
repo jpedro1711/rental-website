@@ -34,7 +34,13 @@ public class CategoryService {
         return category0.get();
     }
 
-    public ResponseEntity<Category> create(CategoryDto data){
+    public ResponseEntity create(CategoryDto data){
+        List<Category> categories = this.findAll();
+        for (Category c: categories) {
+            if (c.getName().equals(data.name())){
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("This category already exists");
+            }
+        }
         var categoryModel = new Category();
         BeanUtils.copyProperties(data, categoryModel);
         return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(categoryModel));

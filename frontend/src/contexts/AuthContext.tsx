@@ -137,7 +137,7 @@ export function AuthProvider({ children }: Props) {
           <div className="fixed inset-0 bg-black opacity-50"></div>
           <div className="bg-white p-4 rounded-lg relative">
             <h2 className="text-xl font-bold mb-4">Erro de login</h2>
-            <p>E-mail ou senha incorretos</p>
+            <p>E-mail ou senha inválidos</p>
             <button
               type="button"
               onClick={closeModal}

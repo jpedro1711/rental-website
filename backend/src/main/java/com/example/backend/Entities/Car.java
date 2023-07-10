@@ -19,6 +19,7 @@ public class Car implements Serializable {
     private Integer year;
     private String imageUrl;
     private double mileage;
+
     private String licensePlate;
     private double pricePerDay;
 
