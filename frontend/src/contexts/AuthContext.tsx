@@ -47,6 +47,7 @@ export function AuthProvider({ children }: Props) {
 
   const closeModal = () => {
     setShowModal(false);
+    setCarregando(false);
   };
 
   const closeLogoutModal = () => {
@@ -111,6 +112,7 @@ export function AuthProvider({ children }: Props) {
       router.push('/');
     } catch (err) {
       setShowModal(true);
+      setCarregando(false);
     }
   }
 
