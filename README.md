@@ -1,9 +1,12 @@
 # Aplicação full-stact NextJS + Java - site de locadora de veículos
 [![NPM](https://img.shields.io/npm/l/react)](https://github.com/jpedro1711/rental-website/blob/main/LICENSE) 
 
+# Link do projeto
+https://rental-website-eight.vercel.app/
+
 # Sobre o projeto
 
-Consiste em um sistema de locadora de veículos, em que um usuário pode filtrar registros, visualizar informações, cadastrar e visualizar reservas de vaículos. Também existem funcionalidades para usuário administrador, visando o gerenciamento de carros e categorias
+Aplicação full-stack desenvolvida com Java, Spring boot e React que consiste em um sistema de uma locadora de veículos. Existem dois tipos de usuário (Admin e Usuário normal), que podem buscar veículos pelo nome, filtrar veículos por sua categoria, realizar reservas e visualizar as reservas. Além disso, o sistema trabalha com autenticação com JWT token, sendo que algumas páginas são de acesso restrito ao usuário administrador e é responsivo. O principal objetivo desse projeto foi ter uma breve ideia de como é desenvolver um sistema de ponta a ponta, utilizando vários tecnologias para atingir um produto final de qualidade.
 
 ## Telas das principais funcionalidades do sistema
 
@@ -17,11 +20,8 @@ Consiste em um sistema de locadora de veículos, em que um usuário pode filtrar
 |--------------------------------------------|-----------------------|
 | ![Listagem de reservas](https://github.com/jpedro1711/rental-website/blob/main/assets/listagem_de_reservas.png) | ![Formulários dinâmicos](https://github.com/jpedro1711/rental-website/blob/main/assets/reserva_formulario.png) |
 
-### Responsividade
-![Responsividade](https://github.com/jpedro1711/rental-website/blob/main/assets/responsividade.png)
-
 ## Diagrama de classes 
-![Diagrama de classes](https://github.com/jpedro1711/rental-website/blob/main/assets/Captura%20de%20tela%202023-07-10%20211354.png)
+![Diagrama de classes](https://raw.githubusercontent.com/jpedro1711/rental-website/main/assets/Class%20Diagram0.png)
 
 ## Tecnologias utilizadas
 ## Back end
@@ -29,45 +29,12 @@ Consiste em um sistema de locadora de veículos, em que um usuário pode filtrar
 - Spring Boot
 - Postgres
 - Maven
+- Railway
 
 ## Front end
 - NextJS
 - Tailwind css
-
-# Como executar o projeto
-## Back end
-Pré-requisitos: 
-- Java 11
-- Realizar instalação do banco de dados postgres (https://www.postgresql.org/download/)
-
-  ## Front end
-Pré-requisitos: 
-- Realizar instalação do nodeJS (https://nodejs.org/en)
-
-``````bash
-# clonar repositório
-git clone https://github.com/jpedro1711/rental-website.git
-
-# iniciar base de dados
-configurar usuário e senha para "postgres" (caso já tenha usuário e senha, alterar no arquivo application.properties)
-criar database com nome "rental" no pgadmin4
-
-# entrar na pasta do projeto back end
-abrir terminal na pasta do projeto
-cd rental-website/backend
-
-# executar o projeto
-./mvnw spring-boot:run
-
-# executar o projeto
-./mvnw spring-boot:run
-
-# Executar Front-end
-executar os comandos:
-npm install
-npm run dev
-
-# Acessar no navegador http://localhost:3000
+- Vercel
 
 # Autor
 
