@@ -8,18 +8,18 @@ import { AuthContext } from '@/contexts/AuthContext';
 import { AuthProvider } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
 
-const Page: any = ({ params }: { params: { carId: string } }) => {
-  const auth = useContext(AuthContext);
+const page: any = ({ params }: { params: { carId: string } }) => {
+  //const auth = useContext(AuthContext);
 
   return (
     <AuthProvider>
       <div>
         <LinkToFrota />
-        <FormReserva carId={params.carId} client={auth.user?.email} />
+        <FormReserva carId={params.carId} /*client={auth.user?.email}*/ />
         <Footer />
       </div>
     </AuthProvider>
   );
 };
 
-export default Page;
+export default page;

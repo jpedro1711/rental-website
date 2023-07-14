@@ -18,7 +18,7 @@ type User = {
 
 interface Props {
   carId: string;
-  client: string | undefined;
+  //client: string | undefined;
 }
 
 const FormReserva = (props: Props) => {
