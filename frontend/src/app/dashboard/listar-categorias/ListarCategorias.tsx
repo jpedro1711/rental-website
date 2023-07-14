@@ -93,12 +93,6 @@ const ListarCategorias = () => {
                   >
                     Editar
                   </a>
-                  <button
-                    onClick={() => handleDelete(c.categoryId)}
-                    className="text-red-500"
-                  >
-                    Excluir
-                  </button>
                 </td>
               </tr>
             ))}
