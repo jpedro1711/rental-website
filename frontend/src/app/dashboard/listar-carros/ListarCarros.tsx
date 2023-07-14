@@ -38,26 +38,25 @@ const ListarCarros = () => {
 
   function handleDelete(carId: number) {
     const c = confirm('Tem certeza que deseja excluir?');
-    if (c) {
-      const { rentalAuthToken: token } = parseCookies();
-      axios
-        .delete(`https://rental-api-production.up.railway.app/cars/${carId}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        .then((res) => {
-          console.log('sucesso ao deletar');
-          console.log(res.data);
-          //window.location.reload();
-        })
-        .catch((err) => {
-          console.log('erro ao deletar');
-          alert('Erro ao deletar veículo');
-        });
-    } else {
-      console.log('não via deletar');
+    if (!c) {
+      return;
     }
+    const { rentalAuthToken: token } = parseCookies();
+    axios
+      .delete(`https://rental-api-production.up.railway.app/cars/${carId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        console.log('sucesso ao deletar');
+        console.log(res.data);
+        //window.location.reload();
+      })
+      .catch((err) => {
+        console.log('erro ao deletar');
+        alert('Erro ao deletar veículo');
+      });
   }
 
   if (!cars) return null;
