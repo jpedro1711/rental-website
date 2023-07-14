@@ -110,12 +110,6 @@ const ListarCarros = () => {
                     >
                       Editar
                     </a>
-                    <button
-                      onClick={() => handleDelete(car.carId)}
-                      className="ml-2 text-red-500"
-                    >
-                      Excluir
-                    </button>
                   </div>
                 </td>
               </tr>
