@@ -47,12 +47,12 @@ const FormCadastro = () => {
     console.log('Nº carteira: ', numeroCarteiraDeMotorista);
     axios
       .post('https://rental-api-production.up.railway.app/auth/register', {
-        email: email,
-        password: senha,
-        role: 'USER',
         name: nome,
+        email: email,
         cpf: cpf,
+        password: senha,
         driverLicenserNumber: numeroCarteiraDeMotorista,
+        role: 'USER',
       })
       .then((res) => {
         const data = {
