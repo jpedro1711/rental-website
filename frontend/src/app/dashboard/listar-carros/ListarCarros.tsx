@@ -48,8 +48,8 @@ const ListarCarros = () => {
         })
         .then((res) => {
           console.log('sucesso ao deletar');
-          console.log(res);
-          window.location.reload();
+          console.log(res.data);
+          //window.location.reload();
         })
         .catch((err) => {
           console.log('erro ao deletar');
