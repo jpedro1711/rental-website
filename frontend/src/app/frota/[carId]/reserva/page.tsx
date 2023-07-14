@@ -8,13 +8,8 @@ import { AuthContext } from '@/contexts/AuthContext';
 import { AuthProvider } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
 
-const page: any = ({ params }: { params: { carId: string } }) => {
+const Page: any = ({ params }: { params: { carId: string } }) => {
   const auth = useContext(AuthContext);
-  const router = useRouter();
-
-  useEffect(() => {
-    console.log(auth.carregando);
-  }, [auth]);
 
   return (
     <AuthProvider>
@@ -27,4 +22,4 @@ const page: any = ({ params }: { params: { carId: string } }) => {
   );
 };
 
-export default page;
+export default Page;
