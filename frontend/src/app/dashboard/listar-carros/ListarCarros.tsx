@@ -36,7 +36,7 @@ const ListarCarros = () => {
       });
   }, []);
 
-  function handleDelete(carId: string) {
+  function handleDelete(carId: number) {
     const c = confirm('Tem certeza que deseja excluir?');
     if (c) {
       const { rentalAuthToken: token } = parseCookies();
@@ -47,10 +47,12 @@ const ListarCarros = () => {
           },
         })
         .then((res) => {
+          console.log('sucesso ao deletar');
           console.log(res);
           window.location.reload();
         })
         .catch((err) => {
+          console.log('erro ao deletar');
           alert('Erro ao deletar veículo');
         });
     }
@@ -108,7 +110,7 @@ const ListarCarros = () => {
                       Editar
                     </a>
                     <button
-                      onClick={() => handleDelete(car.carId.toString())}
+                      onClick={() => handleDelete(car.carId)}
                       className="ml-2 text-red-500"
                     >
                       Excluir
