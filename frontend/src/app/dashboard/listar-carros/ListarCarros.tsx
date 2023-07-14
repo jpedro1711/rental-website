@@ -27,7 +27,7 @@ const ListarCarros = () => {
 
   useEffect(() => {
     axios
-      .get('http://localhost:8080/cars')
+      .get('https://rental-api-production.up.railway.app/cars')
       .then((res) => {
         setCars(res.data);
       })
@@ -41,7 +41,7 @@ const ListarCarros = () => {
     if (c) {
       const { rentalAuthToken: token } = parseCookies();
       axios
-        .delete(`http://localhost:8080/cars/${carId}`, {
+        .delete(`https://rental-api-production.up.railway.app/cars/${carId}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

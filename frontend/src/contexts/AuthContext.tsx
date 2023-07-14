@@ -59,11 +59,14 @@ export function AuthProvider({ children }: Props) {
       const { rentalAuthToken: token } = parseCookies();
       if (token) {
         try {
-          const res = await axios.get('http://localhost:8080/auth/profile', {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
+          const res = await axios.get(
+            'https://rental-api-production.up.railway.app/auth/profile',
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
           console.log('User profile:', res.data);
           setUser(res.data);
           setisAuthenticated(true);
@@ -84,7 +87,7 @@ export function AuthProvider({ children }: Props) {
     try {
       setCarregando(true);
       const { data } = await axios.post<Response>(
-        'http://localhost:8080/auth/login',
+        'https://rental-api-production.up.railway.app/auth/login',
         {
           email: email,
           password: password,
@@ -96,7 +99,7 @@ export function AuthProvider({ children }: Props) {
       });
 
       const response = await axios.get<User>(
-        'http://localhost:8080/auth/profile',
+        'https://rental-api-production.up.railway.app/auth/profile',
         {
           headers: {
             Authorization: `Bearer ${data.token}`,

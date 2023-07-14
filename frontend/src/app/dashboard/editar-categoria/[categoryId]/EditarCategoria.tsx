@@ -19,11 +19,15 @@ const EditarCarro = (params: any) => {
       name: name,
     };
     axios
-      .put(`http://localhost:8080/categories/${params.categoryId}`, data, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
+      .put(
+        `https://rental-api-production.up.railway.app/categories/${params.categoryId}`,
+        data,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
       .then((res) => {
         alert('Categoria atualizado com sucesso');
         router.push('/dashboard/listar-categorias');
@@ -38,11 +42,14 @@ const EditarCarro = (params: any) => {
   useEffect(() => {
     if (token) {
       axios
-        .get(`http://localhost:8080/categories/${params.categoryId}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
+        .get(
+          `https://rental-api-production.up.railway.app/categories/${params.categoryId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
         .then((res) => {
           setCategoryData(res.data);
           setName(res.data.name); // Atribui o valor inicial do model

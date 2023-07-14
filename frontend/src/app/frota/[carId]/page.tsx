@@ -17,7 +17,7 @@ const page = ({ params }: { params: { carId: string } }) => {
   useEffect(() => {
     console.log(typeof params.carId);
     axios
-      .get(`http://localhost:8080/cars/${params.carId}`)
+      .get(`https://rental-api-production.up.railway.app/cars/${params.carId}`)
       .then((res) => {
         setCarData(res.data);
         console.log(res.data);
@@ -48,7 +48,7 @@ const page = ({ params }: { params: { carId: string } }) => {
                 <p>Year: {carData.year}</p>
                 <p>Mileage: {carData.mileage} kilometers</p>
                 <p>License Plate: {carData.licensePlate}</p>
-                <p>Category: {carData.category.categoryId}</p>
+                <p>Category: {carData.category.name}</p>
                 <p>Price per Day: {carData.pricePerDay} $</p>
               </div>
               <div className="flex items-end justify-start mt-2">

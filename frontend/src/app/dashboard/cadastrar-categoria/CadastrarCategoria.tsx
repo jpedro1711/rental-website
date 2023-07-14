@@ -31,7 +31,7 @@ const CadastrarCategoria = () => {
     if (token) {
       axios
         .post(
-          'http://localhost:8080/categories',
+          'https://rental-api-production.up.railway.app/categories',
           {
             name: data.name,
           },

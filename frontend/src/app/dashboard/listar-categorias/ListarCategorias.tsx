@@ -30,11 +30,14 @@ const ListarCategorias = () => {
     if (c) {
       const { rentalAuthToken: token } = parseCookies();
       axios
-        .delete(`http://localhost:8080/categories/${categoryId}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
+        .delete(
+          `https://rental-api-production.up.railway.app/categories/${categoryId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
         .then((res) => {
           console.log(res);
           window.location.reload();
@@ -49,7 +52,7 @@ const ListarCategorias = () => {
 
   useEffect(() => {
     axios
-      .get('http://localhost:8080/categories')
+      .get('https://rental-api-production.up.railway.app/categories')
       .then((res) => setCategorias(res.data))
       .catch((err) => alert('Error fetching categories'));
   }, []);

@@ -21,7 +21,7 @@ const FrotaSection = () => {
 
   useEffect(() => {
     axios
-      .get('http://localhost:8080/cars')
+      .get('https://rental-api-production.up.railway.app/cars')
       .then((res) => {
         const data = res.data;
         setCarsState(data);
@@ -34,7 +34,7 @@ const FrotaSection = () => {
 
   useEffect(() => {
     axios
-      .get('http://localhost:8080/categories')
+      .get('https://rental-api-production.up.railway.app/categories')
       .then((res) => {
         const data = res.data;
         setCategoriesData(data);

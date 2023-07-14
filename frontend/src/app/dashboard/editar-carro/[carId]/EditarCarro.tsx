@@ -51,11 +51,15 @@ const EditarCarro = (params: any) => {
     };
     const { rentalAuthToken: token } = parseCookies();
     axios
-      .put(`http://localhost:8080/cars/${params.carId}`, data, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
+      .put(
+        `https://rental-api-production.up.railway.app/cars/${params.carId}`,
+        data,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
       .then((res) => {
         alert('Veículo atualizado com sucesso');
         router.push('/dashboard/listar-carros');
@@ -69,7 +73,7 @@ const EditarCarro = (params: any) => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/cars/${params.carId}`)
+      .get(`https://rental-api-production.up.railway.app/cars/${params.carId}`)
       .then((res) => {
         setCarData(res.data);
         setModel(res.data.model); // Atribui o valor inicial do model
@@ -85,13 +89,13 @@ const EditarCarro = (params: any) => {
         alert('error fetching car data');
       });
     axios
-      .get('http://localhost:8080/categories')
+      .get('https://rental-api-production.up.railway.app/categories')
       .then((res) => setCategories(res.data))
       .catch((e) => alert('error fetching categories'));
     const { rentalAuthToken: token } = parseCookies();
     if (token) {
       axios
-        .get('http://localhost:8080/makes', {
+        .get('https://rental-api-production.up.railway.app/makes', {
           headers: {
             Authorization: `Bearer ${token}`,
           },

@@ -11,7 +11,7 @@ const SectionHome = () => {
 
   async function handleSearch() {
     const response = await axios.get(
-      `http://localhost:8080/cars/name/${inputValue}`
+      `https://rental-api-production.up.railway.app/cars/name/${inputValue}`
     );
     const [result] = response.data;
     if (!result) {

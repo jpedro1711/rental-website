@@ -52,7 +52,7 @@ const FormReserva = (props: Props) => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/cars/${props.carId}`)
+      .get(`https://rental-api-production.up.railway.app/cars/${props.carId}`)
       .then((res) => {
         setCarData(res.data);
       })
@@ -85,7 +85,7 @@ const FormReserva = (props: Props) => {
       const { rentalAuthToken: token } = parseCookies();
       axios
         .post(
-          'http://localhost:8080/reservations',
+          'https://rental-api-production.up.railway.app/reservations',
           {
             startDate: startDate,
             endDate: endDate,

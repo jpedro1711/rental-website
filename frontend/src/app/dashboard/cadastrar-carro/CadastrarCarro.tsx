@@ -36,13 +36,13 @@ const CadastrarCarro = () => {
 
   useEffect(() => {
     axios
-      .get('http://localhost:8080/categories')
+      .get('https://rental-api-production.up.railway.app/categories')
       .then((res) => setCategories(res.data))
       .catch((e) => alert('error fetching categories'));
     const { rentalAuthToken: token } = parseCookies();
     if (token) {
       axios
-        .get('http://localhost:8080/makes', {
+        .get('https://rental-api-production.up.railway.app/makes', {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -71,7 +71,7 @@ const CadastrarCarro = () => {
     const { rentalAuthToken: token } = parseCookies();
     axios
       .post(
-        'http://localhost:8080/cars',
+        'https://rental-api-production.up.railway.app/cars',
         {
           model: data.model,
           year: data.year,
