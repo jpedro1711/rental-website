@@ -55,6 +55,8 @@ const ListarCarros = () => {
           console.log('erro ao deletar');
           alert('Erro ao deletar veículo');
         });
+    } else {
+      console.log('não via deletar');
     }
   }
 
