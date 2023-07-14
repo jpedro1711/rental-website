@@ -88,7 +88,7 @@ const ListarCategorias = () => {
                 <td className="px-4 py-2 text-left border">{c.name}</td>
                 <td className="px-4 py-2 flex justify-around border">
                   <a
-                    href={`http://localhost:3000/dashboard/editar-categoria/${c.categoryId}`}
+                    href={`https://rental-website-eight.vercel.app//dashboard/editar-categoria/${c.categoryId}`}
                     className="text-blue-500 mr-2"
                   >
                     Editar
