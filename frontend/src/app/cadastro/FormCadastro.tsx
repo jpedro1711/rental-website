@@ -60,7 +60,6 @@ const FormCadastro = () => {
           password: senha,
         };
         signIn(data);
-        router.push('/');
       })
       .catch((err) => {
         setShowModal(true);
