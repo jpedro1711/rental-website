@@ -111,6 +111,9 @@ const ListarCarros = () => {
                       Editar
                     </a>{' '}
                   </div>
+                  <button onClick={() => handleDelete(car.carId)}>
+                    Excluir
+                  </button>
                 </td>
               </tr>
             ))}

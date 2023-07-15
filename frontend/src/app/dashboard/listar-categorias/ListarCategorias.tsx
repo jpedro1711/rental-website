@@ -94,6 +94,9 @@ const ListarCategorias = () => {
                     Editar
                   </a>
                 </td>
+                <button onClick={() => handleDelete(c.categoryId)}>
+                  Excluir
+                </button>
               </tr>
             ))}
           </tbody>
