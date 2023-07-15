@@ -110,10 +110,10 @@ const ListarCarros = () => {
                     >
                       Editar
                     </a>{' '}
+                    <button onClick={() => handleDelete(car.carId)}>
+                      Excluir
+                    </button>
                   </div>
-                  <button onClick={() => handleDelete(car.carId)}>
-                    Excluir
-                  </button>
                 </td>
               </tr>
             ))}
