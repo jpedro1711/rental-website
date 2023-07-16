@@ -67,7 +67,7 @@ export function AuthProvider({ children }: Props) {
               },
             }
           );
-          console.log('User profile:', res.data);
+          //console.log('User profile:', res.data);
           setUser(res.data);
           setisAuthenticated(true);
         } catch (error) {
