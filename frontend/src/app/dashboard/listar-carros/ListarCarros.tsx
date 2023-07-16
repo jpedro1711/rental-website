@@ -51,7 +51,7 @@ const ListarCarros = () => {
       .then((res) => {
         console.log('sucesso ao deletar');
         console.log(res.data);
-        //window.location.reload();
+        window.location.reload();
       })
       .catch((err) => {
         console.log('erro ao deletar');
@@ -105,7 +105,7 @@ const ListarCarros = () => {
                 <td className="border text-center">
                   <div className="flex justify-around p-2">
                     <a
-                      href={`https://rental-website-eight.vercel.app/dashboard/editar-carro/${car.carId}`}
+                      href={`/dashboard/editar-carro/${car.carId}`}
                       className="text-blue-500"
                     >
                       Editar

@@ -26,7 +26,7 @@ const CarDetails = (props: any) => {
       });
   }, []);
 
-  if (carData == null) return 'Car not found';
+  if (carData == null) return 'Loading...';
 
   return (
     <div>
@@ -55,7 +55,7 @@ const CarDetails = (props: any) => {
                 <div>
                   <a
                     className="block rounded text-orange-950 px-8 py-3 bg-orange-400 hover:bg-orange-600 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 w-40 text-center"
-                    href={`https://rental-website-eight.vercel.app//frota/${props.carId}/reserva`}
+                    href={`/frota/${props.carId}/reserva`}
                   >
                     Reservar
                   </a>
