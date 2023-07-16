@@ -74,7 +74,7 @@ const CadastrarCarro = () => {
         'https://rental-api-production.up.railway.app/cars',
         {
           model: data.model,
-          year: data.year,
+          year: Number(data.year),
           imageUrl: data.imageUrl,
           mileage: data.mileage,
           licensePlate: data.licensePlate,
