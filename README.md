@@ -2,7 +2,7 @@
 [![NPM](https://img.shields.io/npm/l/react)](https://github.com/jpedro1711/rental-website/blob/main/LICENSE) 
 
 # Link do projeto
-https://rental-website-eight.vercel.app/
+https://rental-website-two.vercel.app/
 
 # Sobre o projeto
 
